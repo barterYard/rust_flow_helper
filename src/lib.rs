@@ -11,6 +11,11 @@ pub mod web_server;
 #[cfg(feature = "flow")]
 pub mod flow;
 
+#[cfg(feature = "flow")]
+pub mod flow_sdk {
+    pub use flow_sdk::*;
+}
+
 #[cfg(feature = "websocket")]
 pub mod websocket;
 
