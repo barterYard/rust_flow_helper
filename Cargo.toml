@@ -45,7 +45,7 @@ async-trait = { version = "0.1.72", optional = true }
 futures = { version = "0.3.28", optional = true }
 
 # flow
-flow-sdk = { git = "https://github.com/barterYard/flow.rs", branch = "master", optional = true }
+flow-sdk = { git = "https://github.com/barterYard/flow.rs", branch = "protobuf_update", optional = true }
 serde_json = { version = "1.0.104", optional = true }
 
 # websocket
