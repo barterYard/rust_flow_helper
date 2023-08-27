@@ -24,7 +24,7 @@ impl Nft {
         let nft_col = Nft::get_collection(client);
         match nft_col
             .find_one(
-                mongo_doc! {"contract": self.contract, "id": self.id.clone()},
+                mongo_doc! {"contract": self.contract, "id": self.uiid.clone()},
                 None,
             )
             .await
@@ -58,7 +58,7 @@ impl Nft {
                 let new_nft = Nft {
                     contract: contract._id,
                     contract_id: contract.id.clone(),
-                    id: nft_id,
+                    uiid: nft_id,
                     _id: bson::oid::ObjectId::new(),
                     ..Default::default()
                 };
