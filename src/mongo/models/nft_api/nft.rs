@@ -9,9 +9,10 @@ use super::contract::Contract;
 #[derive(Serialize, Deserialize, Debug, Default, Clone, ModelCollection)]
 pub struct Nft {
     pub _id: ObjectId,
-    pub id: i64,
+    pub uiid: i64,
     pub description: Option<String>,
     pub name: Option<String>,
+    pub metadata: Option<ObjectId>,
     pub burned: bool,
     pub owner: ObjectId,
     pub contract_id: String,

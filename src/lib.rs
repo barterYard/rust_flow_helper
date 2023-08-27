@@ -15,6 +15,10 @@ pub mod flow;
 pub mod flow_sdk {
     pub use flow_sdk::*;
 }
+#[cfg(feature = "flow")]
+pub mod flow_rs {
+    pub use ::flow_rs::*;
+}
 
 #[cfg(feature = "websocket")]
 pub mod websocket;

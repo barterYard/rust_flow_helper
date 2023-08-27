@@ -10,6 +10,7 @@ use serde::{Deserialize, Serialize};
 pub struct Owner {
     pub _id: ObjectId,
     pub address: String,
+    pub profile: Option<ObjectId>,
 }
 
 impl Owner {

@@ -11,6 +11,7 @@ pub struct Transfer {
     pub date: String,
     pub from: String,
     pub to: String,
+    pub transaction: String,
     pub nft: Option<ObjectId>,
     pub nft_id: i64,
     pub contract: ObjectId,
