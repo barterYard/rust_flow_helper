@@ -50,7 +50,7 @@ impl Nft {
     ) -> (Nft, bool) {
         let nft_col = Nft::get_collection(client);
         match nft_col
-            .find_one(mongo_doc! {"contract": contract._id, "id": nft_id}, None)
+            .find_one(mongo_doc! {"contract": contract._id, "uiid": nft_id}, None)
             .await
         {
             Ok(Some(nft)) => return (nft, false),
