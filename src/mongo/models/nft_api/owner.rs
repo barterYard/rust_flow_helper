@@ -1,5 +1,3 @@
-use std::collections::HashMap;
-
 use crate::mongo::models::{common::ModelCollection, mongo_doc};
 use bson::{oid::ObjectId, Document};
 use mongodb::{error::Error, results::UpdateResult, Client, ClientSession};
@@ -18,6 +16,7 @@ impl Owner {
         Owner {
             _id: ObjectId::new(),
             address,
+            profile: None,
         }
     }
 

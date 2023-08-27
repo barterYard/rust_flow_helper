@@ -16,7 +16,7 @@ mongo = [
   "serde_json",
   "proc",
 ]
-logger = ["env_logger", "chrono", "log"]
+logger = ["env_logger", "chrono"]
 web_server = ["actix-web", "actix-cors", "serde", "proc"]
 flow = ["flow-sdk", "flow_rs", "serde_json", "async-trait", "serde"]
 websocket = ["actix-web-actors", "actix", "rand", "serde_json", "proc"]
@@ -27,7 +27,7 @@ name = "flow_helpers"
 
 [dependencies]
 # logger
-log = { version = "0.4.20", optional = true }
+log = { version = "0.4.20" }
 chrono = { version = "0.4.26", optional = true }
 env_logger = { version = "0.10.0", optional = true }
 
