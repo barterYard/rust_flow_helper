@@ -23,8 +23,9 @@ impl Owner {
     pub async fn get_or_create(
         client: &Client,
         address: String,
+        save: bool,
         session: Option<&mut ClientSession>,
-    ) -> Self {
+    ) -> (Self, bool) {
         let owner_col = Owner::get_collection(client);
         let address = match address.as_str() {
             "null" => "0x0".to_string(),
@@ -34,17 +35,19 @@ impl Owner {
             .find_one(mongo_doc! {"address": &address}, None)
             .await
         {
-            Ok(Some(owner)) => owner,
+            Ok(Some(owner)) => (owner, false),
             _ => {
                 let new_owner = Owner::new(address);
-                let res = match session {
-                    Some(s) => owner_col.insert_one_with_session(&new_owner, None, s).await,
-                    _ => owner_col.insert_one(&new_owner, None).await,
-                };
-                if res.is_err() {
-                    println!("owner {:?}", res.err());
+                if save {
+                    let res = match session {
+                        Some(s) => owner_col.insert_one_with_session(&new_owner, None, s).await,
+                        _ => owner_col.insert_one(&new_owner, None).await,
+                    };
+                    if res.is_err() {
+                        println!("owner {:?}", res.err());
+                    }
                 }
-                new_owner
+                (new_owner, true)
             }
         }
     }
