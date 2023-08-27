@@ -18,7 +18,7 @@ mongo = [
 ]
 logger = ["env_logger", "chrono"]
 web_server = ["actix-web", "actix-cors", "serde", "proc"]
-flow = ["flow-sdk", "flow_rs", "serde_json", "async-trait", "serde"]
+flow = ["flow_rs", "serde_json", "async-trait", "serde"]
 websocket = ["actix-web-actors", "actix", "rand", "serde_json", "proc"]
 proc_macro = ["proc"]
 
@@ -45,7 +45,6 @@ async-trait = { version = "0.1.73", optional = true }
 futures = { version = "0.3.28", optional = true }
 
 # flow
-flow-sdk = { git = "https://github.com/barterYard/flow.rs", branch = "protobuf_update", optional = true }
 serde_json = { version = "1.0.105", optional = true }
 flow_rs = { git = "https://github.com/barterYard/flow_rust", branch = "main", optional = true }
 
