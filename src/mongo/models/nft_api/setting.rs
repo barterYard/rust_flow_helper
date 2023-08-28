@@ -8,7 +8,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Serialize, Deserialize, Debug, Default, Clone, ModelCollection)]
 pub struct Setting {
     pub _id: ObjectId,
-    pub latest_requested_block: i64,
+    pub latest_requested_block: u64,
 }
 
 impl Setting {
