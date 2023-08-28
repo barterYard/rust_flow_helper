@@ -42,7 +42,7 @@ impl Setting {
                 q,
                 mongo_doc! {
                     "$set" : {
-                        "latest_requested_block": self.latest_requested_block
+                        "latest_requested_block": self.latest_requested_block as i64
                     }
                 },
                 None,
