@@ -7,6 +7,7 @@ use super::{common::ModelCollection, mongo_doc, Owner, Transfer};
 pub mod contract;
 pub mod nft;
 pub mod owner;
+pub mod setting;
 pub mod transfer;
 
 pub async fn create_index(m_client: &Client) -> Result<(), Box<dyn Error>> {
