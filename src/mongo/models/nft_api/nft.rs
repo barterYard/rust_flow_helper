@@ -14,7 +14,7 @@ pub struct Nft {
     pub name: Option<String>,
     pub metadata: Option<ObjectId>,
     pub burned: bool,
-    pub owner: Option<String>,
+    pub owner: Option<ObjectId>,
     pub contract_id: String,
     pub contract: ObjectId,
 }
