@@ -19,7 +19,7 @@ async fn main() {
     let mut s = Setting::get(&m_client).await;
     println!("{:?}", s);
     s.latest_requested_block = 100;
-    s.update(&m_client).await;
+    s.update(&m_client, None).await;
     // loop {
     //     let r = match client
     //         .get_block_by_height(GetBlockByHeightRequest {

@@ -33,20 +33,17 @@ impl Setting {
         settings.first().unwrap().clone()
     }
 
-    pub async fn update(&self, client: &Client) {
+    pub async fn update(&self, client: &Client, session: Option<&mut ClientSession>) {
         let s_col = Setting::get_collection(client);
         let q = mongo_doc! {"_id": self._id};
-
-        let r = s_col
-            .update_one(
-                q,
-                mongo_doc! {
-                    "$set" : {
-                        "latest_requested_block": self.latest_requested_block as i64
-                    }
-                },
-                None,
-            )
-            .await;
+        let doc_update = mongo_doc! {
+            "$set" : {
+                "latest_requested_block": self.latest_requested_block as i64
+            }
+        };
+        let _ = match session {
+            Some(s) => s_col.update_one_with_session(q, doc_update, None, s).await,
+            _ => s_col.update_one(q, doc_update, None).await,
+        };
     }
 }
