@@ -69,6 +69,7 @@ impl Transfer {
         from: String,
         to: String,
         nft: ObjectId,
+        transaction: String,
         client: &Client,
     ) -> Option<Transfer> {
         let transfer_col = Transfer::get_collection(client);
@@ -79,7 +80,8 @@ impl Transfer {
                     "date": date.clone(),
                     "from": from.clone(),
                     "to": to.clone(),
-                    "nft": nft.clone()
+                    "nft": nft.clone(),
+                    "transaction": transaction.clone()
                 },
                 None,
             )
