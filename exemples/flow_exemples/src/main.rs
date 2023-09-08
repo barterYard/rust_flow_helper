@@ -8,18 +8,87 @@ use flow_helpers::flow_rs::proto::{
     execution::GetTransactionResultRequest,
 };
 use flow_helpers::flow_rs::FlowNetwork;
-use flow_helpers::mongo::{self, models::Setting};
+use flow_helpers::mongo::{self, models::Spork};
 use std::str;
+const THRESOLD: [(i64, &str); 23] = [
+    (7601063, "http://access-001.mainnet1.nodes.onflow.org:9000"),
+    (8742959, "http://access-001.mainnet2.nodes.onflow.org:9000"),
+    (9737133, "http://access-001.mainnet3.nodes.onflow.org:9000"),
+    (9992020, "http://access-001.mainnet4.nodes.onflow.org:9000"),
+    (12020337, "http://access-001.mainnet5.nodes.onflow.org:9000"),
+    (12609237, "http://access-001.mainnet6.nodes.onflow.org:9000"),
+    (13404174, "http://access-001.mainnet7.nodes.onflow.org:9000"),
+    (13950742, "http://access-001.mainnet8.nodes.onflow.org:9000"),
+    (14892104, "http://access-001.mainnet9.nodes.onflow.org:9000"),
+    (
+        15791891,
+        "http://access-001.mainnet10.nodes.onflow.org:9000",
+    ),
+    (
+        16755602,
+        "http://access-001.mainnet11.nodes.onflow.org:9000",
+    ),
+    (
+        17544523,
+        "http://access-001.mainnet12.nodes.onflow.org:9000",
+    ),
+    (
+        18587478,
+        "http://access-001.mainnet13.nodes.onflow.org:9000",
+    ),
+    (
+        19050753,
+        "http://access-001.mainnet14.nodes.onflow.org:9000",
+    ),
+    (
+        21291692,
+        "http://access-001.mainnet15.nodes.onflow.org:9000",
+    ),
+    (
+        23830813,
+        "http://access-001.mainnet16.nodes.onflow.org:9000",
+    ),
+    (
+        27341470,
+        "http://access-001.mainnet17.nodes.onflow.org:9000",
+    ),
+    (
+        31735955,
+        "http://access-001.mainnet18.nodes.onflow.org:9000",
+    ),
+    (
+        35858811,
+        "http://access-001.mainnet19.nodes.onflow.org:9000",
+    ),
+    (
+        40171634,
+        "http://access-001.mainnet20.nodes.onflow.org:9000",
+    ),
+    (
+        44950207,
+        "http://access-001.mainnet21.nodes.onflow.org:9000",
+    ),
+    (
+        47169687,
+        "http://access-001.mainnet22.nodes.onflow.org:9000",
+    ),
+    (55114467, "http://access.mainnet.nodes.onflow.org:9000"),
+];
 
 #[tokio::main]
 async fn main() {
-    let mut client = FlowNetwork::Mainnet.get_flow_client().await;
     let m_client = mongo::client::create().await;
-    let mut latest_block_height = 59430117;
-    let mut s = Setting::get(&m_client).await;
-    println!("{:?}", s);
-    s.latest_requested_block = 100;
-    s.update(&m_client, None).await;
+    // for (index, sp) in THRESOLD.iter().enumerate() {
+    //     Spork::create(
+    //         &m_client,
+    //         sp.0,
+    //         sp.1.to_string(),
+    //         (index + 1).try_into().unwrap(),
+    //     )
+    //     .await;
+    // }
+    let sp = Spork::get(&m_client, 12020512).await.unwrap();
+    println!("{:?}", sp);
     // loop {
     //     let r = match client
     //         .get_block_by_height(GetBlockByHeightRequest {
