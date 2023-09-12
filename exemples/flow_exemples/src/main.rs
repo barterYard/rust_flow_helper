@@ -10,6 +10,7 @@ use flow_helpers::flow_rs::proto::{
 use flow_helpers::flow_rs::FlowNetwork;
 use flow_helpers::mongo::{self, models::Spork};
 use std::str;
+
 const THRESOLD: [(i64, &str); 23] = [
     (7601063, "http://access-001.mainnet1.nodes.onflow.org:9000"),
     (8742959, "http://access-001.mainnet2.nodes.onflow.org:9000"),
@@ -78,15 +79,7 @@ const THRESOLD: [(i64, &str); 23] = [
 #[tokio::main]
 async fn main() {
     let m_client = mongo::client::create().await;
-    // for (index, sp) in THRESOLD.iter().enumerate() {
-    //     Spork::create(
-    //         &m_client,
-    //         sp.0,
-    //         sp.1.to_string(),
-    //         (index + 1).try_into().unwrap(),
-    //     )
-    //     .await;
-    // }
+
     let sp = Spork::get(&m_client, 12020512).await.unwrap();
     println!("{:?}", sp);
     // loop {

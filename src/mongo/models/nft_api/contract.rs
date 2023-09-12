@@ -4,6 +4,8 @@ use bson::{DateTime, Document};
 use mongodb::Client;
 use proc::ModelCollection;
 use serde::{Deserialize, Serialize};
+
+// contract definition
 #[derive(Serialize, Deserialize, Debug, Default, Clone, ModelCollection)]
 pub struct Contract {
     pub _id: bson::oid::ObjectId,

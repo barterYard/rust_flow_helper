@@ -1,8 +1,7 @@
 use crate::mongo::models::{common::ModelCollection, mongo_doc};
-use bson::{oid::ObjectId, Document};
-use futures::TryStreamExt;
+use bson::oid::ObjectId;
 use mongodb::options::FindOneOptions;
-use mongodb::{error::Error, results::UpdateResult, Client, ClientSession};
+use mongodb::Client;
 use proc::ModelCollection;
 use serde::{Deserialize, Serialize};
 
@@ -36,7 +35,7 @@ impl Spork {
     }
 
     pub async fn save(self, client: &Client) {
-        Spork::get_collection(client).insert_one(self, None).await;
+        let _ = Spork::get_collection(client).insert_one(self, None).await;
     }
 
     pub async fn get(client: &Client, height: i64) -> Option<Spork> {

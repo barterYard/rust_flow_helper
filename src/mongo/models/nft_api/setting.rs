@@ -1,7 +1,7 @@
 use crate::mongo::models::{common::ModelCollection, mongo_doc};
-use bson::{oid::ObjectId, Document};
+use bson::oid::ObjectId;
 use futures::TryStreamExt;
-use mongodb::{error::Error, results::UpdateResult, Client, ClientSession};
+use mongodb::{Client, ClientSession};
 use proc::ModelCollection;
 use serde::{Deserialize, Serialize};
 
@@ -19,7 +19,7 @@ impl Setting {
         }
     }
     pub async fn save(self, client: &Client) {
-        Setting::get_collection(client).insert_one(self, None).await;
+        let _ = Setting::get_collection(client).insert_one(self, None).await;
     }
     pub async fn get(client: &Client) -> Setting {
         let s_col = Setting::get_collection(client);

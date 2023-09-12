@@ -1,7 +1,3 @@
-use std::{collections::HashMap, str::FromStr};
-
-use self::{config::Config, network::get_script};
-use async_trait::async_trait;
 // use flow_sdk::{
 //     access::TransactionResultResponse,
 //     account::Account,

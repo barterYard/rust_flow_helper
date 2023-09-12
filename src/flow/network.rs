@@ -1,5 +1,4 @@
 // use flow_sdk::prelude::TonicHyperFlowClient;
-use std::env;
 
 use crate::flow::config::Config;
 

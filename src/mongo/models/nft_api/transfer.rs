@@ -1,30 +1,47 @@
 use crate::mongo::models::{common::ModelCollection, mongo_doc};
 use bson::oid::ObjectId;
-use log::{error, info};
+use log::error;
+use mongodb::bson::DateTime;
 use mongodb::{error::Error, results::InsertOneResult, Client, ClientSession};
 use proc::ModelCollection;
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Default, Clone, ModelCollection)]
+#[derive(Serialize, Deserialize, Debug, Clone, ModelCollection)]
 pub struct Transfer {
     pub _id: ObjectId,
-    pub date: String,
+    pub date: DateTime,
     pub from: String,
     pub to: String,
     pub transaction: String,
     pub nft: Option<ObjectId>,
+    pub block_height: Option<i64>,
     pub nft_id: i64,
     pub contract: ObjectId,
 }
 
+impl Default for Transfer {
+    fn default() -> Self {
+        Transfer::new(
+            DateTime::now(),
+            "0x0".to_string(),
+            "0x0".to_string(),
+            ObjectId::new(),
+            "".to_string(),
+            None,
+            None,
+            -1,
+        )
+    }
+}
 impl Transfer {
     pub fn new(
-        date: String,
+        date: DateTime,
         from: String,
         to: String,
         contract: ObjectId,
         transaction: String,
         nft: Option<ObjectId>,
+        block_height: Option<i64>,
         nft_id: i64,
     ) -> Self {
         Transfer {
@@ -34,18 +51,20 @@ impl Transfer {
             to,
             transaction,
             nft,
+            block_height,
             nft_id,
             contract,
         }
     }
 
     pub async fn create(
-        date: String,
+        date: DateTime,
         from: String,
         to: String,
         transaction: String,
         nft: Option<ObjectId>,
         nft_id: i64,
+        block_height: Option<i64>,
         contract: ObjectId,
         client: &Client,
     ) -> Result<InsertOneResult, Error> {
@@ -56,6 +75,7 @@ impl Transfer {
             to,
             transaction,
             nft,
+            block_height,
             nft_id,
             contract,
         };
@@ -65,7 +85,7 @@ impl Transfer {
     }
 
     pub async fn find(
-        date: String,
+        date: DateTime,
         from: String,
         to: String,
         nft: ObjectId,
@@ -97,11 +117,12 @@ impl Transfer {
     }
 
     pub async fn get_or_create(
-        date: String,
+        date: DateTime,
         from: String,
         to: String,
         transaction: String,
         nft_id: i64,
+        block_height: Option<i64>,
         contract: ObjectId,
         client: &Client,
         session: Option<&mut ClientSession>,
@@ -130,6 +151,7 @@ impl Transfer {
                     to,
                     transaction,
                     nft: None,
+                    block_height,
                     nft_id,
                     contract,
                 };
