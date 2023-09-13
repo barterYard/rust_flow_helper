@@ -11,15 +11,19 @@ pub struct Spork {
     pub version: i32,
     pub start_height: i64,
     pub access_url: String,
+    pub latest_requested_block: i64,
+    pub end_height: i64,
 }
 
 impl Spork {
-    pub fn new(start_height: i64, access_url: String, version: i32) -> Self {
+    pub fn new(start_height: i64, end_height: i64, access_url: String, version: i32) -> Self {
         Spork {
             _id: ObjectId::new(),
             version,
             start_height,
             access_url,
+            latest_requested_block: start_height,
+            end_height,
         }
     }
 
@@ -28,8 +32,9 @@ impl Spork {
         start_height: i64,
         access_url: String,
         version: i32,
+        end_height: i64,
     ) -> Self {
-        let sp = Spork::new(start_height, access_url, version);
+        let sp = Spork::new(start_height, end_height, access_url, version);
         sp.clone().save(client).await;
         sp
     }
@@ -42,7 +47,7 @@ impl Spork {
         let s_col = Spork::get_collection(client);
         s_col
             .find_one(
-                mongo_doc! { "start_height": { "$lt": height } },
+                mongo_doc! { "start_height": { "$lt": height }, "end_height": {"$gt": height} },
                 FindOneOptions::builder()
                     .sort(mongo_doc! { "start_height": -1 })
                     .build(),
