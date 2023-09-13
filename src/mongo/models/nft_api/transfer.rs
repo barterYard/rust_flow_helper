@@ -175,6 +175,25 @@ impl Transfer {
         }
     }
 
+    pub async fn update_nft(
+        &self,
+        nft: ObjectId,
+        client: &Client,
+        session: Option<&mut ClientSession>,
+    ) {
+        let s_col = Transfer::get_collection(client);
+        let q = mongo_doc! {"_id": self._id};
+        let doc_update = mongo_doc! {
+            "$set" : {
+                "nft": nft
+            }
+        };
+        let _ = match session {
+            Some(s) => s_col.update_one_with_session(q, doc_update, None, s).await,
+            _ => s_col.update_one(q, doc_update, None).await,
+        };
+    }
+
     pub async fn save(&self, client: &Client) -> Result<InsertOneResult, Error> {
         Transfer::get_collection(client)
             .insert_one(self, None)
