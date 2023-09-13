@@ -1,7 +1,7 @@
 use crate::mongo::models::{common::ModelCollection, mongo_doc};
 use bson::oid::ObjectId;
 use mongodb::options::FindOneOptions;
-use mongodb::Client;
+use mongodb::{Client, ClientSession};
 use proc::ModelCollection;
 use serde::{Deserialize, Serialize};
 
@@ -41,6 +41,24 @@ impl Spork {
 
     pub async fn save(self, client: &Client) {
         let _ = Spork::get_collection(client).insert_one(self, None).await;
+    }
+
+    pub async fn update_requested_block(
+        self,
+        client: &Client,
+        session: Option<&mut ClientSession>,
+    ) {
+        let s_col = Spork::get_collection(client);
+        let q = mongo_doc! {"_id": self._id};
+        let doc_update = mongo_doc! {
+            "$set" : {
+                "latest_requested_block": self.latest_requested_block
+            }
+        };
+        let _ = match session {
+            Some(s) => s_col.update_one_with_session(q, doc_update, None, s).await,
+            _ => s_col.update_one(q, doc_update, None).await,
+        };
     }
 
     pub async fn get(client: &Client, height: i64) -> Option<Spork> {
