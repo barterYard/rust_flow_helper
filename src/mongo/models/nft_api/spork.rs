@@ -11,6 +11,7 @@ pub struct Spork {
     pub version: i32,
     pub start_height: i64,
     pub access_url: String,
+    pub live_start: Option<i64>,
     pub latest_requested_block: i64,
     pub end_height: Option<i64>,
 }
@@ -29,6 +30,7 @@ impl Spork {
             access_url,
             latest_requested_block: start_height,
             end_height,
+            ..Default::default()
         }
     }
 
