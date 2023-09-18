@@ -11,6 +11,9 @@ pub mod web_server;
 #[cfg(feature = "flow")]
 pub mod flow;
 
+#[cfg(feature = "redis")]
+pub mod redis;
+
 #[cfg(feature = "flow")]
 pub mod flow_rs {
     pub use ::flow_rs::*;

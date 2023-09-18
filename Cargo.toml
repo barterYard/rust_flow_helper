@@ -21,6 +21,7 @@ web_server = ["actix-web", "actix-cors", "serde", "proc"]
 flow = ["flow_rs", "serde_json", "async-trait", "serde"]
 websocket = ["actix-web-actors", "actix", "rand", "serde_json", "proc"]
 proc_macro = ["proc"]
+redis_client = ["redis"]
 
 [lib]
 name = "flow_helpers"
@@ -52,3 +53,6 @@ flow_rs = { git = "https://github.com/barterYard/flow_rust", branch = "main", op
 actix-web-actors = { version = "4.2.0", optional = true }
 actix = { version = "0.13.0", optional = true }
 rand = { version = "0.8.5", optional = true }
+
+# redis
+redis = { version = "0.23.3", optional = true }

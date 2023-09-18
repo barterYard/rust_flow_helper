@@ -9,12 +9,12 @@ use flow_helpers::flow_rs::proto::{
 };
 use flow_helpers::flow_rs::FlowNetwork;
 use flow_helpers::mongo::{self, models::Spork};
-use std::str;
+use flow_helpers::redis::client::Redis;
 
 #[tokio::main]
 async fn main() {
     let m_client = mongo::client::create().await;
-
+    let r_client = Redis::new();
     let sp = Spork::get(&m_client, 12020512).await.unwrap();
     println!("{:?}", sp);
     // loop {
