@@ -188,10 +188,13 @@ impl Transfer {
                 "nft": nft
             }
         };
-        let _ = match session {
+        let res = match session {
             Some(s) => s_col.update_one_with_session(q, doc_update, None, s).await,
             _ => s_col.update_one(q, doc_update, None).await,
         };
+        if res.is_err() {
+            error!("{:?}", res.err());
+        }
     }
 
     pub async fn save(&self, client: &Client) -> Result<InsertOneResult, Error> {
