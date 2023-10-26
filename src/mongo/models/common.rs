@@ -1,3 +1,4 @@
+use bson::Document;
 use mongodb::Client;
 
 pub trait ModelCollection
