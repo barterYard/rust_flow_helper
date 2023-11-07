@@ -100,7 +100,7 @@ pub fn authenticated(_attr: TokenStream, item: TokenStream) -> TokenStream {
 
     let start_itm: Stmt = parse_quote! {
         if #identity_name.is_none() {
-            return (None, http::StatusCode::UNAUTHORIZED);
+            return HttpResponse::Unauthorized().finish();
         };
     };
 
